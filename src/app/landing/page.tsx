@@ -116,7 +116,7 @@ export default function LandingPage() {
             귀국생 전용
           </div>
           <h1 className="main-title">
-            귀국 후 짐,<br />
+            귀국 짐 정리,<br />
             <span className="highlight">교환학생끼리</span>{' '}간편하게 거래하세요
           </h1>
           <p className="sub-title">

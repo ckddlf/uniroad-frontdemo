@@ -5,8 +5,13 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "유니로드 (UniRoad) | 교환학생 사전 예약",
-  description: "아는 선배가 없어도 유니로드가 선배가 되어준다. 교환학생 필수 앱 유니로드 사전 예약 중!",
+  title: "유니로드 | 교환학생 준비, 먼저 써보세요",
+  description: "파견교 탐색부터 중고거래까지, MVP 테스터 신청하기",
+  openGraph: {
+    title: "유니로드 | 교환학생 준비, 먼저 써보세요",
+    description: "파견교 탐색부터 중고거래까지, MVP 테스터 신청하기",
+    type: "website",
+  }
 };
 
 export default function RootLayout({
