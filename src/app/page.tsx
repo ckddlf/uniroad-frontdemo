@@ -71,15 +71,6 @@ export default function LandingPage() {
 
   return (
     <div className="landing-container">
-      {/* Top Navigation Bar Mock */}
-      <nav className="nav-bar">
-        <div className="nav-content">
-          <div className="nav-close">✕</div>
-          <div className="nav-title">uniroad landing</div>
-          <div className="nav-more">•••</div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="hero">
         <div className="section-content">
@@ -261,24 +252,6 @@ export default function LandingPage() {
           max-width: 800px;
           margin: 0 auto;
           width: 100%;
-        }
-
-        .nav-bar {
-          background: #1e293b;
-          color: #94a3b8;
-          font-size: 0.9rem;
-          position: sticky;
-          top: 0;
-          z-index: 1000;
-        }
-
-        .nav-content {
-          max-width: 1200px;
-          margin: 0 auto;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 12px 20px;
         }
 
         .hero {
