@@ -99,8 +99,8 @@ export default function LandingPage() {
         <div className="section-content">
           {!isSubmitted ? (
             <div className="form-card">
-              <h2>베타 출시 알림 받기</h2>
-              <p>사전 등록하고 유니로드 첫 번째 유저가 되세요</p>
+              <h2>MVP 테스터 신청</h2>
+              <p>가장 먼저 써보고 교환학생 준비를 더 쉽게 하세요</p>
               
               <form onSubmit={handleSubmit}>
                 <div className="input-grid">
@@ -181,12 +181,12 @@ export default function LandingPage() {
             <p>연간 국내 교환학생<br />파견 인원</p>
           </div>
           <div className="stat-item">
-            <h3>40시간</h3>
-            <p>평균 정보 탐색에<br />낭비되는 시간</p>
+            <h3>83.3%</h3>
+            <p>중고거래 경험자 중 <br />오픈채팅 의존</p>
           </div>
           <div className="stat-item">
-            <h3>4.6개</h3>
-            <p>평균 교차 탐색 채널<br />수</p>
+            <h3>85.3</h3>
+            <p>선입금 과정 불안감 호소<br /></p>
           </div>
         </div>
       </section>
@@ -203,7 +203,7 @@ export default function LandingPage() {
                 <Search size={24} />
               </div>
               <div className="feature-text">
-                <h4>파교 탐색</h4>
+                <h4>파견교 탐색</h4>
                 <p>조건 입력 시 최적 학교 추천. 선배 후기·체크리스트·장학금 등 경험 중심 정보를 한눈에</p>
               </div>
             </div>

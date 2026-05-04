@@ -13,7 +13,13 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const DISCORD_WEBHOOK_URL = ''; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
+  const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684885449506896/wZxM7lr_PUB5sSnUPUwiD1C7pZ-5HXkjKjWedp9UPKp0AYJSjOqt0pBja6U5HJ2rtOtF'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
+
+  const countries = [
+    "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드", "스웨덴", "스위스", "오스트리아", "체코",
+    "폴란드", "포르투갈", "아일랜드", "미국", "캐나다", "일본", "중국", "대만", "싱가포르", "베트남",
+    "태국", "호주", "뉴질랜드", "핀란드", "노르웨이", "덴마크"
+  ].sort();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -23,7 +29,7 @@ export default function LandingPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!DISCORD_WEBHOOK_URL) {
-      alert('디스코드 웹훅 URL이 설정되지 않았습니다. 코드를 확인해주세요.');
+      alert('디스코드 웹훅 URL이 설정되지 않았습니다.');
       return;
     }
 
@@ -57,7 +63,7 @@ export default function LandingPage() {
       }
     } catch (error) {
       console.error(error);
-      alert('사전 등록 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      alert('사전 등록 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);
     }
@@ -65,159 +71,161 @@ export default function LandingPage() {
 
   return (
     <div className="landing-container">
-      {/* Top Navigation Bar Mock */}
-      <nav className="nav-bar">
-        <div className="nav-close">✕</div>
-        <div className="nav-title">uniroad landing</div>
-        <div className="nav-more">•••</div>
-      </nav>
-
       {/* Hero Section */}
       <section className="hero">
-        <div className="badge">
-          <Plane size={14} style={{ marginRight: 6 }} />
-          교환학생 전용 플랫폼
-        </div>
-        <h1 className="main-title">
-          아는 선배가 없어도,<br />
-          <span className="highlight">유니로드</span>가 선배가 되어준다
-        </h1>
-        <p className="sub-title">
-          매 학기 반복되는 정보 탐색과 중고거래를<br />
-          흩어진 채널 없이 하나의 앱으로 해결합니다
-        </p>
-        
-        <div className="registration-count">
-          <span className="dot"></span>
-          현재 <span className="count">22</span> 명이 사전 등록했습니다
+        <div className="section-content">
+          <div className="badge">
+            <Plane size={14} style={{ marginRight: 6 }} />
+            귀국생 전용
+          </div>
+          <h1 className="main-title">
+            귀국 후 짐,<br />
+            <span className="highlight">교환학생끼리</span>간편하게 거래하세요
+          </h1>
+          <p className="sub-title">
+            밥솥ㆍ건조대ㆍ생활용품을 다음 교환학생에게<br />
+            교환학생 전용 중고거래로 손쉽게
+          </p>
+
+          <div className="registration-count">
+            <span className="dot"></span>
+            현재 <span className="count">22</span> 명이 사전 등록했습니다
+          </div>
         </div>
       </section>
 
       {/* Form Section */}
       <section className="form-section">
-        {!isSubmitted ? (
-          <div className="form-card">
-            <h2>베타 출시 알림 받기</h2>
-            <p>사전 등록하고 유니로드 첫 번째 유저가 되세요</p>
-            
-            <form onSubmit={handleSubmit}>
-              <div className="input-group">
-                <label>이름</label>
-                <input 
-                  type="text" 
-                  name="name"
-                  placeholder="홍길동" 
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+        <div className="section-content">
+          {!isSubmitted ? (
+            <div className="form-card">
+              <h2>MVP 테스터 신청</h2>
+              <p>가장 먼저 써보고 교환학생 준비를 더 쉽게 하세요</p>
 
-              <div className="input-group">
-                <label>학교</label>
-                <input 
-                  type="text" 
-                  name="school"
-                  placeholder="서울과학기술대학교" 
-                  value={formData.school}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="input-grid">
+                  <div className="input-group">
+                    <label>이름</label>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="홍길동"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
 
-              <div className="input-group">
-                <label>파견 예정 국가</label>
-                <select 
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>국가를 선택하세요</option>
-                  <option value="독일">독일</option>
-                  <option value="미국">미국</option>
-                  <option value="프랑스">프랑스</option>
-                  <option value="일본">일본</option>
-                  <option value="기타">기타</option>
-                </select>
-              </div>
+                  <div className="input-group">
+                    <label>학교</label>
+                    <input
+                      type="text"
+                      name="school"
+                      placeholder="서울과학기술대학교"
+                      value={formData.school}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
 
-              <div className="input-group">
-                <label>이메일</label>
-                <input 
-                  type="email" 
-                  name="email"
-                  placeholder="hello@example.com" 
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+                  <div className="input-group">
+                    <label>파견 중인 국가</label>
+                    <select
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="" disabled>국가를 선택하세요</option>
+                      {countries.map(country => (
+                        <option key={country} value={country}>{country}</option>
+                      ))}
+                      <option value="기타">기타</option>
+                    </select>
+                  </div>
 
-              <button type="submit" className="submit-btn" disabled={isSubmitting}>
-                {isSubmitting ? '전송 중...' : '사전 등록하기 →'}
-              </button>
-              <p className="privacy-info">개인정보는 출시 알림 발송에만 사용됩니다</p>
-            </form>
-          </div>
-        ) : (
-          <div className="form-card success">
-            <CheckCircle2 size={48} color="#2563eb" />
-            <h2>사전 등록 완료!</h2>
-            <p>유니로드의 첫 번째 소식을 이메일로 전해드릴게요.</p>
-          </div>
-        )}
+                  <div className="input-group">
+                    <label>이메일</label>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="hello@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                  {isSubmitting ? '전송 중...' : '사전 등록하기 →'}
+                </button>
+                <p className="privacy-info">개인정보는 출시 알림 발송에만 사용됩니다</p>
+              </form>
+            </div>
+          ) : (
+            <div className="form-card success">
+              <CheckCircle2 size={48} color="#2563eb" />
+              <h2>사전 등록 완료!</h2>
+              <p>유니로드의 첫 번째 소식을 이메일로 전해드릴게요.</p>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Stats Section */}
       <section className="stats-section">
-        <div className="stat-item">
-          <h3>27,252명</h3>
-          <p>연간 국내 교환학생<br />파견 인원</p>
-        </div>
-        <div className="stat-item">
-          <h3>40시간</h3>
-          <p>평균 정보 탐색에<br />낭비되는 시간</p>
-        </div>
-        <div className="stat-item">
-          <h3>4.6개</h3>
-          <p>평균 교차 탐색 채널<br />수</p>
+        <div className="section-content stats-grid">
+          <div className="stat-item">
+            <h3>27,252명</h3>
+            <p>연간 국내 교환학생<br />파견 인원</p>
+          </div>
+          <div className="stat-item">
+            <h3>83.3%</h3>
+            <p>중고거래 경험자 중 <br />오픈채팅 의존</p>
+          </div>
+          <div className="stat-item">
+            <h3>85.3</h3>
+            <p>선입금 과정 불안감 호소<br /></p>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
       <section className="features-section">
-        <h2 className="section-heading">교환학생의 모든 준비,<br />유니로드 하나로</h2>
-        <p className="section-subheading">파편화된 정보와 불안한 거래를 한 곳에서 해결합니다</p>
+        <div className="section-content">
+          <h2 className="section-heading">교환학생의 모든 준비,<br />유니로드 하나로</h2>
+          <p className="section-subheading">파편화된 정보와 불안한 거래를 한 곳에서 해결합니다</p>
 
-        <div className="feature-cards">
-          <div className="feature-card">
-            <div className="feature-icon">
-              <Search size={24} />
+          <div className="feature-cards">
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Search size={24} />
+              </div>
+              <div className="feature-text">
+                <h4>파견교 탐색</h4>
+                <p>조건 입력 시 최적 학교 추천. 선배 후기·체크리스트·장학금 등 경험 중심 정보를 한눈에</p>
+              </div>
             </div>
-            <div className="feature-text">
-              <h4>파교 탐색</h4>
-              <p>조건 입력 시 최적 학교 추천. 선배 후기·체크리스트·장학금 등 경험 중심 정보를 한눈에</p>
-            </div>
-          </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">
-              <ShoppingCart size={24} />
+            <div className="feature-card">
+              <div className="feature-icon">
+                <ShoppingCart size={24} />
+              </div>
+              <div className="feature-text">
+                <h4>교환학생 전용 중고거래</h4>
+                <p>교환학생 인증 기반 신뢰 거래. 파견 전 생필품 구매부터 귀국 전 판매까지 안전하게</p>
+              </div>
             </div>
-            <div className="feature-text">
-              <h4>교환학생 전용 중고거래</h4>
-              <p>교환학생 인증 기반 신뢰 거래. 파견 전 생필품 구매부터 귀국 전 판매까지 안전하게</p>
-            </div>
-          </div>
 
-          <div className="feature-card">
-            <div className="feature-icon">
-              <MessageSquare size={24} />
-            </div>
-            <div className="feature-text">
-              <h4>1:1 멘토링</h4>
-              <p>해당 학교를 다녀온 귀국생에게 직접 질문. 인맥 없이도 검증된 정보를 얻을 수 있는 구조</p>
+            <div className="feature-card">
+              <div className="feature-icon">
+                <MessageSquare size={24} />
+              </div>
+              <div className="feature-text">
+                <h4>1:1 멘토링</h4>
+                <p>해당 학교를 다녀온 귀국생에게 직접 질문. 인맥 없이도 검증된 정보를 얻을 수 있는 구조</p>
+              </div>
             </div>
           </div>
         </div>
@@ -225,8 +233,10 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="footer">
-        <p>© 2026 UniRoad · 교환학생 전용 라이프사이클 플랫폼</p>
-        <p>문의: uniroad.official@gmail.com</p>
+        <div className="section-content">
+          <p>© 2026 UniRoad · 교환학생 전용 라이프사이클 플랫폼</p>
+          <p>문의: uniroad.official@gmail.com</p>
+        </div>
       </footer>
 
       <style jsx>{`
@@ -235,24 +245,19 @@ export default function LandingPage() {
           color: white;
           min-height: 100vh;
           font-family: 'Inter', -apple-system, sans-serif;
-          max-width: 480px;
-          margin: 0 auto;
+          width: 100%;
         }
 
-        .nav-bar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 12px 20px;
-          background: #1e293b;
-          font-size: 0.9rem;
-          color: #94a3b8;
+        .section-content {
+          max-width: 800px;
+          margin: 0 auto;
+          width: 100%;
         }
 
         .hero {
-          padding: 60px 24px 40px;
+          padding: 80px 24px 60px;
           text-align: center;
-          background: linear-gradient(to bottom, #1e3a8a 0%, #0f172a 100%);
+          background: radial-gradient(circle at top, #1e3a8a 0%, #0f172a 100%);
         }
 
         .badge {
@@ -269,41 +274,45 @@ export default function LandingPage() {
         }
 
         .main-title {
-          font-size: 2rem;
+          font-size: 2.5rem;
           font-weight: 800;
-          line-height: 1.3;
-          margin-bottom: 20px;
+          line-height: 1.2;
+          margin-bottom: 24px;
         }
 
         .highlight {
           color: #60a5fa;
+          background: linear-gradient(to right, #60a5fa, #3b82f6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
 
         .sub-title {
-          font-size: 0.95rem;
+          font-size: 1.1rem;
           color: #94a3b8;
           line-height: 1.6;
-          margin-bottom: 40px;
+          margin-bottom: 48px;
         }
 
         .registration-count {
           display: inline-flex;
           align-items: center;
           background: rgba(255, 255, 255, 0.05);
-          padding: 10px 20px;
+          padding: 12px 24px;
           border-radius: 30px;
-          font-size: 0.9rem;
+          font-size: 0.95rem;
           color: #cbd5e1;
           border: 1px solid rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
         }
 
         .dot {
-          width: 8px;
-          height: 8px;
+          width: 10px;
+          height: 10px;
           background: #10b981;
           border-radius: 50%;
-          margin-right: 10px;
-          box-shadow: 0 0 10px #10b981;
+          margin-right: 12px;
+          box-shadow: 0 0 15px #10b981;
         }
 
         .count {
@@ -313,184 +322,209 @@ export default function LandingPage() {
         }
 
         .form-section {
-          padding: 0 24px 60px;
-          margin-top: -20px;
+          padding: 0 24px 80px;
+          margin-top: -30px;
         }
 
         .form-card {
           background: white;
           color: #1e293b;
-          padding: 40px 24px;
-          border-radius: 24px;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+          padding: 50px 40px;
+          border-radius: 32px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
           text-align: center;
         }
 
-        .form-card.success {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 16px;
-        }
-
         .form-card h2 {
-          font-size: 1.4rem;
+          font-size: 1.8rem;
           font-weight: 800;
-          margin-bottom: 8px;
+          margin-bottom: 12px;
         }
 
         .form-card p {
-          font-size: 0.9rem;
+          font-size: 1rem;
           color: #64748b;
-          margin-bottom: 30px;
+          margin-bottom: 40px;
+        }
+
+        .input-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+          margin-bottom: 24px;
+          text-align: left;
         }
 
         .input-group {
-          text-align: left;
-          margin-bottom: 20px;
+          margin-bottom: 0;
         }
 
         .input-group label {
           display: block;
-          font-size: 0.85rem;
+          font-size: 0.9rem;
           font-weight: 700;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
           color: #334155;
         }
 
         .input-group input, .input-group select {
           width: 100%;
-          padding: 14px 16px;
+          padding: 16px;
           border: 1px solid #e2e8f0;
-          border-radius: 12px;
-          font-size: 0.95rem;
+          border-radius: 16px;
+          font-size: 1rem;
           outline: none;
-          transition: border-color 0.2s;
-          background: white;
+          transition: all 0.2s;
+          background: #f8fafc;
         }
 
-        .input-group input:focus {
+        .input-group input:focus, .input-group select:focus {
           border-color: #2563eb;
+          background: white;
+          box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
         .submit-btn {
           width: 100%;
           background: #1e293b;
           color: white;
-          padding: 16px;
-          border-radius: 12px;
-          font-size: 1rem;
+          padding: 18px;
+          border-radius: 16px;
+          font-size: 1.1rem;
           font-weight: 700;
           margin-top: 10px;
-          transition: background 0.2s;
+          transition: transform 0.2s, background 0.2s;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
           background: #0f172a;
+          transform: translateY(-2px);
         }
 
-        .submit-btn:disabled {
-          opacity: 0.7;
-          cursor: not-allowed;
+        .submit-btn:active {
+          transform: translateY(0);
         }
 
         .privacy-info {
-          font-size: 0.75rem !important;
-          margin-top: 16px !important;
+          font-size: 0.8rem !important;
+          margin-top: 20px !important;
           margin-bottom: 0 !important;
         }
 
         .stats-section {
           background: #f8fafc;
-          padding: 60px 24px;
-          display: flex;
-          justify-content: space-between;
-          text-align: center;
+          padding: 80px 24px;
           color: #1e293b;
         }
 
+        .stats-grid {
+          display: flex;
+          justify-content: space-around;
+          text-align: center;
+        }
+
         .stat-item h3 {
-          font-size: 1.6rem;
+          font-size: 2.2rem;
           font-weight: 800;
-          margin-bottom: 8px;
+          margin-bottom: 12px;
           color: #1e293b;
         }
 
         .stat-item p {
-          font-size: 0.75rem;
+          font-size: 0.9rem;
           color: #64748b;
-          line-height: 1.5;
+          line-height: 1.6;
         }
 
         .features-section {
-          padding: 80px 24px;
+          padding: 100px 24px;
           text-align: center;
         }
 
         .section-heading {
-          font-size: 1.6rem;
+          font-size: 2rem;
           font-weight: 800;
           line-height: 1.3;
-          margin-bottom: 16px;
+          margin-bottom: 20px;
           color: #60a5fa;
         }
 
         .section-subheading {
-          font-size: 0.95rem;
+          font-size: 1.1rem;
           color: #94a3b8;
-          margin-bottom: 40px;
+          margin-bottom: 60px;
         }
 
         .feature-cards {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
         }
 
         .feature-card {
           background: white;
-          padding: 24px;
-          border-radius: 20px;
+          padding: 32px;
+          border-radius: 24px;
           display: flex;
-          gap: 16px;
+          flex-direction: column;
+          gap: 20px;
           text-align: left;
           color: #1e293b;
+          transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+          transform: translateY(-10px);
         }
 
         .feature-icon {
-          width: 48px;
-          height: 48px;
+          width: 56px;
+          height: 56px;
           background: #eff6ff;
-          border-radius: 12px;
+          border-radius: 16px;
           display: flex;
           align-items: center;
           justify-content: center;
           color: #2563eb;
-          flex-shrink: 0;
         }
 
         .feature-text h4 {
-          font-size: 1rem;
+          font-size: 1.1rem;
           font-weight: 800;
-          margin-bottom: 6px;
+          margin-bottom: 10px;
         }
 
         .feature-text p {
-          font-size: 0.85rem;
+          font-size: 0.95rem;
           color: #64748b;
-          line-height: 1.5;
+          line-height: 1.6;
         }
 
         .footer {
-          padding: 40px 24px 100px;
+          padding: 60px 24px 80px;
           text-align: center;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           color: #475569;
           border-top: 1px solid #1e293b;
         }
 
-        .footer p {
-          margin-bottom: 8px;
+        @media (max-width: 768px) {
+          .main-title {
+            font-size: 2rem;
+          }
+          .input-grid {
+            grid-template-columns: 1fr;
+          }
+          .stats-grid {
+            flex-direction: column;
+            gap: 40px;
+          }
+          .feature-cards {
+            grid-template-columns: 1fr;
+          }
+          .form-card {
+            padding: 40px 24px;
+          }
         }
       `}</style>
     </div>
