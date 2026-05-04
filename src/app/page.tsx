@@ -170,7 +170,7 @@ export default function LandingPage() {
                     <label>파견 예정 국가</label>
                     {!isCustomCountry ? (
                       <div className="custom-select-container">
-                        <div 
+                        <div
                           className={`custom-select-trigger ${showDropdown ? 'active' : ''}`}
                           onClick={() => setShowDropdown(!showDropdown)}
                         >
@@ -179,19 +179,19 @@ export default function LandingPage() {
                           </span>
                           <ChevronDown size={18} className={`chevron ${showDropdown ? 'open' : ''}`} />
                         </div>
-                        
+
                         {showDropdown && (
                           <div className="custom-dropdown-list">
                             {countries.map(country => (
-                              <div 
-                                key={country} 
+                              <div
+                                key={country}
                                 className="custom-dropdown-item"
                                 onClick={() => handleCountrySelect(country)}
                               >
                                 {country}
                               </div>
                             ))}
-                            <div 
+                            <div
                               className="custom-dropdown-item direct-input-opt"
                               onClick={() => handleCountrySelect('직접 입력')}
                             >
@@ -202,17 +202,17 @@ export default function LandingPage() {
                       </div>
                     ) : (
                       <div className="custom-input-wrapper">
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           name="country"
-                          placeholder="국가 또는 도시명을 입력하세요" 
+                          placeholder="국가 또는 도시명을 입력하세요"
                           value={formData.country}
                           onChange={handleChange}
                           required
                           autoFocus
                         />
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           className="reset-selection-btn"
                           onClick={resetCountrySelection}
                           title="목록에서 선택하기"
@@ -260,12 +260,12 @@ export default function LandingPage() {
             <p>연간 국내 교환학생<br />파견 인원</p>
           </div>
           <div className="stat-item">
-            <h3>83.3%</h3>
-            <p>중고거래 경험자 중 <br />오픈채팅 의존</p>
+            <h3>40시간</h3>
+            <p>평균 정보 탐색에 <br />낭비되는 시간</p>
           </div>
           <div className="stat-item">
-            <h3>85.3%</h3>
-            <p>선입금 과정 불안감 호소<br /></p>
+            <h3>4.6개</h3>
+            <p>평균 교차 탐색<br />채널 수</p>
           </div>
         </div>
       </section>
