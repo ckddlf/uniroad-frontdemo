@@ -185,7 +185,7 @@ export default function LandingPage() {
             <p>중고거래 경험자 중 <br />오픈채팅 의존</p>
           </div>
           <div className="stat-item">
-            <h3>85.3</h3>
+            <h3>85.3%</h3>
             <p>선입금 과정 불안감 호소<br /></p>
           </div>
         </div>
