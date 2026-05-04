@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Plane, Search, ShoppingCart, MessageSquare, ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Plane, Search, ShoppingCart, MessageSquare, ArrowRight, CheckCircle2, ChevronDown, RotateCcw } from 'lucide-react';
 
 export default function LandingPage() {
   const [formData, setFormData] = useState({
@@ -13,15 +13,17 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCustomCountry, setIsCustomCountry] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684885449506896/wZxM7lr_PUB5sSnUPUwiD1C7pZ-5HXkjKjWedp9UPKp0AYJSjOqt0pBja6U5HJ2rtOtF'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
 
   const countries = [
-  "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드",
-  "스웨덴", "스위스", "오스트리아", "체코",
-  "폴란드", "포르투갈", "아일랜드",
-  "핀란드", "노르웨이", "덴마크",
-  "벨기에", "리투아니아", "에스토니아"
+    "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드",
+    "스웨덴", "스위스", "오스트리아", "체코",
+    "폴란드", "포르투갈", "아일랜드",
+    "핀란드", "노르웨이", "덴마크",
+    "벨기에", "리투아니아", "에스토니아"
   ].sort();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -30,16 +32,37 @@ export default function LandingPage() {
     if (name === 'country' && value === '직접 입력') {
       setIsCustomCountry(true);
       setFormData(prev => ({ ...prev, country: '' }));
+      setShowDropdown(false);
       return;
     }
 
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleCountrySelect = (country: string) => {
+    if (country === '직접 입력') {
+      setIsCustomCountry(true);
+      setFormData(prev => ({ ...prev, country: '' }));
+    } else {
+      setFormData(prev => ({ ...prev, country }));
+    }
+    setShowDropdown(false);
+  };
+
   const resetCountrySelection = () => {
     setIsCustomCountry(false);
     setFormData(prev => ({ ...prev, country: '' }));
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,10 +124,10 @@ export default function LandingPage() {
             매 학기 반복되는 정보 탐색과 중고거래를<br />
             흩어진 채널 없이 하나의 앱으로 해결합니다
           </p>
-          
+
           <div className="registration-count">
             <span className="dot"></span>
-            현재 <span className="count">21</span> 명이 사전 등록했습니다
+            현재 <span className="count">22</span> 명이 사전 등록했습니다
           </div>
         </div>
       </section>
@@ -116,15 +139,15 @@ export default function LandingPage() {
             <div className="form-card">
               <h2>MVP 테스터 신청</h2>
               <p>가장 먼저 써보고 교환학생 준비를 더 쉽게 하세요</p>
-              
+
               <form onSubmit={handleSubmit}>
                 <div className="input-grid">
                   <div className="input-group">
                     <label>이름</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="name"
-                      placeholder="홍길동" 
+                      placeholder="홍길동"
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -133,31 +156,50 @@ export default function LandingPage() {
 
                   <div className="input-group">
                     <label>학교</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="school"
-                      placeholder="서울과학기술대학교" 
+                      placeholder="서울과학기술대학교"
                       value={formData.school}
                       onChange={handleChange}
                       required
                     />
                   </div>
 
-                  <div className="input-group">
+                  <div className="input-group" ref={dropdownRef}>
                     <label>파견 예정 국가</label>
                     {!isCustomCountry ? (
-                      <select 
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="" disabled>국가를 선택하세요</option>
-                        {countries.map(country => (
-                          <option key={country} value={country}>{country}</option>
-                        ))}
-                        <option value="직접 입력">직접 입력...</option>
-                      </select>
+                      <div className="custom-select-container">
+                        <div 
+                          className={`custom-select-trigger ${showDropdown ? 'active' : ''}`}
+                          onClick={() => setShowDropdown(!showDropdown)}
+                        >
+                          <span className={formData.country ? '' : 'placeholder'}>
+                            {formData.country || '국가를 선택하세요'}
+                          </span>
+                          <ChevronDown size={18} className={`chevron ${showDropdown ? 'open' : ''}`} />
+                        </div>
+                        
+                        {showDropdown && (
+                          <div className="custom-dropdown-list">
+                            {countries.map(country => (
+                              <div 
+                                key={country} 
+                                className="custom-dropdown-item"
+                                onClick={() => handleCountrySelect(country)}
+                              >
+                                {country}
+                              </div>
+                            ))}
+                            <div 
+                              className="custom-dropdown-item direct-input-opt"
+                              onClick={() => handleCountrySelect('직접 입력')}
+                            >
+                              직접 입력...
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <div className="custom-input-wrapper">
                         <input 
@@ -183,10 +225,10 @@ export default function LandingPage() {
 
                   <div className="input-group">
                     <label>이메일</label>
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       name="email"
-                      placeholder="hello@example.com" 
+                      placeholder="hello@example.com"
                       value={formData.email}
                       onChange={handleChange}
                       required
@@ -315,6 +357,7 @@ export default function LandingPage() {
           font-weight: 800;
           line-height: 1.2;
           margin-bottom: 24px;
+          word-break: keep-all;
         }
 
         .highlight {
@@ -329,6 +372,7 @@ export default function LandingPage() {
           color: #94a3b8;
           line-height: 1.6;
           margin-bottom: 48px;
+          word-break: keep-all;
         }
 
         .registration-count {
@@ -376,12 +420,14 @@ export default function LandingPage() {
           font-size: 1.8rem;
           font-weight: 800;
           margin-bottom: 12px;
+          word-break: keep-all;
         }
 
         .form-card p {
           font-size: 1rem;
           color: #64748b;
           margin-bottom: 40px;
+          word-break: keep-all;
         }
 
         .input-grid {
@@ -419,6 +465,91 @@ export default function LandingPage() {
           border-color: #2563eb;
           background: white;
           box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .custom-select-container {
+          position: relative;
+          width: 100%;
+        }
+
+        .custom-select-trigger {
+          width: 100%;
+          padding: 16px;
+          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          font-size: 1rem;
+          background: #f8fafc;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .custom-select-trigger:hover {
+          border-color: #cbd5e1;
+        }
+
+        .custom-select-trigger.active {
+          border-color: #2563eb;
+          background: white;
+          box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .custom-select-trigger .placeholder {
+          color: #94a3b8;
+        }
+
+        .chevron {
+          color: #64748b;
+          transition: transform 0.2s;
+        }
+
+        .chevron.open {
+          transform: rotate(180deg);
+        }
+
+        .custom-dropdown-list {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 0;
+          right: 0;
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+          z-index: 100;
+          max-height: 240px;
+          overflow-y: auto;
+          padding: 8px;
+          animation: slideDown 0.2s ease-out;
+        }
+
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .custom-dropdown-item {
+          padding: 12px 16px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-size: 0.95rem;
+          color: #334155;
+          transition: background 0.2s;
+        }
+
+        .custom-dropdown-item:hover {
+          background: #f1f5f9;
+          color: #2563eb;
+        }
+
+        .direct-input-opt {
+          border-top: 1px solid #f1f5f9;
+          margin-top: 4px;
+          padding-top: 12px;
+          font-weight: 600;
+          color: #2563eb;
         }
 
         .custom-input-wrapper {
@@ -511,6 +642,7 @@ export default function LandingPage() {
           line-height: 1.3;
           margin-bottom: 20px;
           color: #60a5fa;
+          word-break: keep-all;
         }
 
         .section-subheading {
@@ -556,12 +688,14 @@ export default function LandingPage() {
           font-size: 1.1rem;
           font-weight: 800;
           margin-bottom: 10px;
+          word-break: keep-all;
         }
 
         .feature-text p {
           font-size: 0.95rem;
           color: #64748b;
           line-height: 1.6;
+          word-break: keep-all;
         }
 
         .footer {
