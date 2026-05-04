@@ -13,7 +13,7 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684885449506896/wZxM7lr_PUB5sSnUPUwiD1C7pZ-5HXkjKjWedp9UPKp0AYJSjOqt0pBja6U5HJ2rtOtF'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
+  const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684899814735912/aBSSDbdx671fwAda3ai7lSjxqBySDwB7Bbty167UghSfj_dhbswkKYi8EOSZ1uJZDodO'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
 
   const countries = [
     "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드", "스웨덴", "스위스", "오스트리아", "체코",
