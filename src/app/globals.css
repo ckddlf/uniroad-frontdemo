@@ -2,9 +2,9 @@
   --primary: #2563eb;
   --primary-light: #60a5fa;
   --secondary: #f97316;
-  --background: #f8fafc;
-  --card-bg: #ffffff;
-  --foreground: #0f172a;
+  --background: #020617;
+  --card-bg: #1e293b;
+  --foreground: #f8fafc;
   --text-muted: #64748b;
   --border: #e2e8f0;
   --radius-sm: 8px;
@@ -42,12 +42,11 @@ button {
 }
 
 .app-container {
-  max-width: 480px;
+  width: 100%;
   margin: 0 auto;
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #0f172a;
   position: relative;
-  box-shadow: 0 0 20px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
 }
