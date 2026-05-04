@@ -103,7 +103,7 @@ export default function LandingPage() {
 
           <div className="registration-count">
             <span className="dot"></span>
-            현재 <span className="count">22</span> 명이 사전 등록했습니다
+            현재 <span className="count">17</span> 명이 사전 등록했습니다
           </div>
         </div>
       </section>
