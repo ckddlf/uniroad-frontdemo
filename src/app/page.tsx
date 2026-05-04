@@ -138,7 +138,7 @@ export default function LandingPage() {
           {!isSubmitted ? (
             <div className="form-card">
               <h2>MVP 테스터 신청</h2>
-              <p>가장 먼저 써보고 교환학생 준비를 더 쉽게 하세요</p>
+              <p>가장 먼저 써보고, 교환학생 준비를 더 손쉽게</p>
 
               <form onSubmit={handleSubmit}>
                 <div className="input-grid">
@@ -274,7 +274,7 @@ export default function LandingPage() {
       <section className="features-section">
         <div className="section-content">
           <h2 className="section-heading">교환학생의 모든 준비,<br />유니로드 하나로</h2>
-          <p className="section-subheading">파편화된 정보와 불안한 거래를 한 곳에서 해결합니다</p>
+          <p className="section-subheading">파편화된 정보와 불안한 거래를<br className="mobile-br" /> 한 곳에서 해결합니다</p>
 
           <div className="feature-cards">
             <div className="feature-card">
@@ -649,6 +649,17 @@ export default function LandingPage() {
           font-size: 1.1rem;
           color: #94a3b8;
           margin-bottom: 60px;
+          word-break: keep-all;
+        }
+
+        .mobile-br {
+          display: block;
+        }
+
+        @media (min-width: 768px) {
+          .mobile-br {
+            display: none;
+          }
         }
 
         .feature-cards {
