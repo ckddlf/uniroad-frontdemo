@@ -13,11 +13,11 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684885449506896/wZxM7lr_PUB5sSnUPUwiD1C7pZ-5HXkjKjWedp9UPKp0AYJSjOqt0pBja6U5HJ2rtOtF'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
+  const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684899814735912/aBSSDbdx671fwAda3ai7lSjxqBySDwB7Bbty167UghSfj_dhbswkKYi8EOSZ1uJZDodO'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
 
   const countries = [
-    "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드", "스웨덴", "스위스", "오스트리아", "체코", 
-    "폴란드", "포르투갈", "아일랜드", "미국", "캐나다", "일본", "중국", "대만", "싱가포르", "베트남", 
+    "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드", "스웨덴", "스위스", "오스트리아", "체코",
+    "폴란드", "포르투갈", "아일랜드", "미국", "캐나다", "일본", "중국", "대만", "싱가포르", "베트남",
     "태국", "호주", "뉴질랜드", "핀란드", "노르웨이", "덴마크"
   ].sort();
 
@@ -76,17 +76,17 @@ export default function LandingPage() {
         <div className="section-content">
           <div className="badge">
             <Plane size={14} style={{ marginRight: 6 }} />
-            교환학생 전용 플랫폼
+            귀국생 전용
           </div>
           <h1 className="main-title">
-            아는 선배가 없어도,<br />
-            <span className="highlight">유니로드</span>가 선배가 되어준다
+            귀국 후 짐,<br />
+            <span className="highlight">교환학생끼리</span>간편하게 거래하세요
           </h1>
           <p className="sub-title">
-            매 학기 반복되는 정보 탐색과 중고거래를<br />
-            흩어진 채널 없이 하나의 앱으로 해결합니다
+            밥솥ㆍ건조대ㆍ생활용품을 다음 교환학생에게<br />
+            교환학생 전용 중고거래로 손쉽게
           </p>
-          
+
           <div className="registration-count">
             <span className="dot"></span>
             현재 <span className="count">22</span> 명이 사전 등록했습니다
@@ -101,15 +101,15 @@ export default function LandingPage() {
             <div className="form-card">
               <h2>MVP 테스터 신청</h2>
               <p>가장 먼저 써보고 교환학생 준비를 더 쉽게 하세요</p>
-              
+
               <form onSubmit={handleSubmit}>
                 <div className="input-grid">
                   <div className="input-group">
                     <label>이름</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="name"
-                      placeholder="홍길동" 
+                      placeholder="홍길동"
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -118,10 +118,10 @@ export default function LandingPage() {
 
                   <div className="input-group">
                     <label>학교</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="school"
-                      placeholder="서울과학기술대학교" 
+                      placeholder="서울과학기술대학교"
                       value={formData.school}
                       onChange={handleChange}
                       required
@@ -129,8 +129,8 @@ export default function LandingPage() {
                   </div>
 
                   <div className="input-group">
-                    <label>파견 예정 국가</label>
-                    <select 
+                    <label>파견 중인 국가</label>
+                    <select
                       name="country"
                       value={formData.country}
                       onChange={handleChange}
@@ -146,10 +146,10 @@ export default function LandingPage() {
 
                   <div className="input-group">
                     <label>이메일</label>
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       name="email"
-                      placeholder="hello@example.com" 
+                      placeholder="hello@example.com"
                       value={formData.email}
                       onChange={handleChange}
                       required
