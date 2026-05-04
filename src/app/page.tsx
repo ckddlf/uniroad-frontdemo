@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Plane, Search, ShoppingCart, MessageSquare, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Plane, Search, ShoppingCart, MessageSquare, ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
 
 export default function LandingPage() {
   const [formData, setFormData] = useState({
@@ -12,18 +12,33 @@ export default function LandingPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isCustomCountry, setIsCustomCountry] = useState(false);
 
   const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684885449506896/wZxM7lr_PUB5sSnUPUwiD1C7pZ-5HXkjKjWedp9UPKp0AYJSjOqt0pBja6U5HJ2rtOtF'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
 
   const countries = [
-    "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드", "스웨덴", "스위스", "오스트리아", "체코", 
-    "폴란드", "포르투갈", "아일랜드", "미국", "캐나다", "일본", "중국", "대만", "싱가포르", "베트남", 
-    "태국", "호주", "뉴질랜드", "핀란드", "노르웨이", "덴마크"
+  "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드",
+  "스웨덴", "스위스", "오스트리아", "체코",
+  "폴란드", "포르투갈", "아일랜드",
+  "핀란드", "노르웨이", "덴마크",
+  "벨기에", "리투아니아", "에스토니아"
   ].sort();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
+    if (name === 'country' && value === '직접 입력') {
+      setIsCustomCountry(true);
+      setFormData(prev => ({ ...prev, country: '' }));
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const resetCountrySelection = () => {
+    setIsCustomCountry(false);
+    setFormData(prev => ({ ...prev, country: '' }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -130,18 +145,40 @@ export default function LandingPage() {
 
                   <div className="input-group">
                     <label>파견 예정 국가</label>
-                    <select 
-                      name="country"
-                      value={formData.country}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="" disabled>국가를 선택하세요</option>
-                      {countries.map(country => (
-                        <option key={country} value={country}>{country}</option>
-                      ))}
-                      <option value="기타">기타</option>
-                    </select>
+                    {!isCustomCountry ? (
+                      <select 
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="" disabled>국가를 선택하세요</option>
+                        {countries.map(country => (
+                          <option key={country} value={country}>{country}</option>
+                        ))}
+                        <option value="직접 입력">직접 입력...</option>
+                      </select>
+                    ) : (
+                      <div className="custom-input-wrapper">
+                        <input 
+                          type="text" 
+                          name="country"
+                          placeholder="국가 또는 도시명을 입력하세요" 
+                          value={formData.country}
+                          onChange={handleChange}
+                          required
+                          autoFocus
+                        />
+                        <button 
+                          type="button" 
+                          className="reset-selection-btn"
+                          onClick={resetCountrySelection}
+                          title="목록에서 선택하기"
+                        >
+                          <RotateCcw size={16} />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="input-group">
@@ -185,7 +222,7 @@ export default function LandingPage() {
             <p>중고거래 경험자 중 <br />오픈채팅 의존</p>
           </div>
           <div className="stat-item">
-            <h3>85.3</h3>
+            <h3>85.3%</h3>
             <p>선입금 과정 불안감 호소<br /></p>
           </div>
         </div>
@@ -382,6 +419,33 @@ export default function LandingPage() {
           border-color: #2563eb;
           background: white;
           box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .custom-input-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .reset-selection-btn {
+          background: #f1f5f9;
+          border: 1px solid #e2e8f0;
+          color: #64748b;
+          width: 48px;
+          height: 48px;
+          min-width: 48px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .reset-selection-btn:hover {
+          background: #e2e8f0;
+          color: #1e293b;
         }
 
         .submit-btn {
