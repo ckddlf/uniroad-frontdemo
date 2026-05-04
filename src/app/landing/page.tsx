@@ -8,6 +8,7 @@ export default function LandingPage() {
     name: '',
     school: '',
     country: '',
+    city: '',
     email: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,6 +81,7 @@ export default function LandingPage() {
           { name: '이름', value: formData.name, inline: true },
           { name: '학교', value: formData.school, inline: true },
           { name: '파견 예정 국가', value: formData.country, inline: true },
+          { name: '파견 지역(도시)', value: formData.city || '미입력', inline: true },
           { name: '이메일', value: formData.email, inline: false },
         ],
         timestamp: new Date().toISOString(),
@@ -221,6 +223,21 @@ export default function LandingPage() {
                       </div>
                     )}
                   </div>
+
+                  {formData.country && (
+                    <div className="input-group">
+                      <label>파견 지역 (도시)</label>
+                      <input 
+                        type="text" 
+                        name="city"
+                        placeholder="예: 뮌헨, 파리, 마드리드 등" 
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                        autoFocus
+                      />
+                    </div>
+                  )}
 
                   <div className="input-group">
                     <label>이메일</label>
