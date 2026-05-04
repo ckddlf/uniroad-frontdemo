@@ -80,7 +80,7 @@ export default function LandingPage() {
           </div>
           <h1 className="main-title">
             귀국 후 짐,<br />
-            <span className="highlight">교환학생끼리</span>간편하게 거래하세요
+            <span className="highlight">교환학생끼리 </span>간편하게 거래하세요
           </h1>
           <p className="sub-title">
             밥솥ㆍ건조대ㆍ생활용품을 다음 교환학생에게<br />
