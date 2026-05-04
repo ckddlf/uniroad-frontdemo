@@ -5,10 +5,10 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "유니로드 | 교환학생 준비, 먼저 써보세요",
+  title: "유니로드 | 교환학생 준비를 더 쉽게",
   description: "파견교 탐색부터 중고거래까지, MVP 테스터 신청하기",
   openGraph: {
-    title: "유니로드 | 교환학생 준비, 먼저 써보세요",
+    title: "유니로드 | 교환학생 준비를 더 쉽게",
     description: "파견교 탐색부터 중고거래까지, MVP 테스터 신청하기",
     type: "website",
   }
