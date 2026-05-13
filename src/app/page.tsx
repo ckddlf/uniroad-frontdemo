@@ -10,14 +10,22 @@ export default function LandingPage() {
     country: '',
     city: '',
     email: '',
+    feature: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCustomCountry, setIsCustomCountry] = useState(false);
+  const [isCustomFeature, setIsCustomFeature] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showFeatureDropdown, setShowFeatureDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const featureDropdownRef = useRef<HTMLDivElement>(null);
 
   const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1500684885449506896/wZxM7lr_PUB5sSnUPUwiD1C7pZ-5HXkjKjWedp9UPKp0AYJSjOqt0pBja6U5HJ2rtOtF'; // 사용자가 나중에 입력할 수 있도록 비워둡니다.
+
+  const features = [
+    "중고거래", "교환학생 커뮤니티", "정보 탐색", "멘토 멘티"
+  ];
 
   const countries = [
     "독일", "프랑스", "스페인", "영국", "이탈리아", "네덜란드",
@@ -37,6 +45,13 @@ export default function LandingPage() {
       return;
     }
 
+    if (name === 'feature' && (value === '직접입력' || value === '직접 입력')) {
+      setIsCustomFeature(true);
+      setFormData(prev => ({ ...prev, feature: '' }));
+      setShowFeatureDropdown(false);
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -50,15 +65,33 @@ export default function LandingPage() {
     setShowDropdown(false);
   };
 
+  const handleFeatureSelect = (feature: string) => {
+    if (feature === '직접입력' || feature === '직접 입력') {
+      setIsCustomFeature(true);
+      setFormData(prev => ({ ...prev, feature: '' }));
+    } else {
+      setFormData(prev => ({ ...prev, feature }));
+    }
+    setShowFeatureDropdown(false);
+  };
+
   const resetCountrySelection = () => {
     setIsCustomCountry(false);
     setFormData(prev => ({ ...prev, country: '' }));
+  };
+
+  const resetFeatureSelection = () => {
+    setIsCustomFeature(false);
+    setFormData(prev => ({ ...prev, feature: '' }));
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowDropdown(false);
+      }
+      if (featureDropdownRef.current && !featureDropdownRef.current.contains(event.target as Node)) {
+        setShowFeatureDropdown(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -84,6 +117,7 @@ export default function LandingPage() {
           { name: '파견 예정 국가', value: formData.country, inline: true },
           { name: '파견 지역(도시)', value: formData.city || '미입력', inline: true },
           { name: '이메일', value: formData.email, inline: false },
+          { name: '가장 기대되는 기능', value: formData.feature || '미입력', inline: false },
         ],
         timestamp: new Date().toISOString(),
       }]
@@ -211,7 +245,6 @@ export default function LandingPage() {
                           value={formData.country}
                           onChange={handleChange}
                           required
-                          autoFocus
                         />
                         <button
                           type="button"
@@ -235,10 +268,65 @@ export default function LandingPage() {
                         value={formData.city}
                         onChange={handleChange}
                         required
-                        autoFocus
                       />
                     </div>
                   )}
+
+                  <div className="input-group" ref={featureDropdownRef}>
+                    <label>가장 기대되는 기능</label>
+                    {!isCustomFeature ? (
+                      <div className="custom-select-container">
+                        <div
+                          className={`custom-select-trigger ${showFeatureDropdown ? 'active' : ''}`}
+                          onClick={() => setShowFeatureDropdown(!showFeatureDropdown)}
+                        >
+                          <span className={formData.feature ? '' : 'placeholder'}>
+                            {formData.feature || '기대되는 기능을 선택하세요'}
+                          </span>
+                          <ChevronDown size={18} className={`chevron ${showFeatureDropdown ? 'open' : ''}`} />
+                        </div>
+
+                        {showFeatureDropdown && (
+                          <div className="custom-dropdown-list">
+                            {features.map(f => (
+                              <div
+                                key={f}
+                                className="custom-dropdown-item"
+                                onClick={() => handleFeatureSelect(f)}
+                              >
+                                {f}
+                              </div>
+                            ))}
+                            <div
+                              className="custom-dropdown-item direct-input-opt"
+                              onClick={() => handleFeatureSelect('직접입력')}
+                            >
+                              직접 입력...
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="custom-input-wrapper">
+                        <input
+                          type="text"
+                          name="feature"
+                          placeholder="자유롭게 입력해주세요"
+                          value={formData.feature}
+                          onChange={handleChange}
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="reset-selection-btn"
+                          onClick={resetFeatureSelection}
+                          title="목록에서 선택하기"
+                        >
+                          <RotateCcw size={16} />
+                        </button>
+                      </div>
+                    )}
+                  </div>
 
                   <div className="input-group">
                     <label>이메일</label>
