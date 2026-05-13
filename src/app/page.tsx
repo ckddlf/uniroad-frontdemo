@@ -32,7 +32,7 @@ export default function LandingPage() {
     "스웨덴", "스위스", "오스트리아", "체코",
     "폴란드", "포르투갈", "아일랜드",
     "핀란드", "노르웨이", "덴마크",
-    "벨기에", "리투아니아", "에스토니아"
+    "벨기에", "리투아니아", "에스토니아", "미국",
   ].sort();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
